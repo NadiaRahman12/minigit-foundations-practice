@@ -29,7 +29,13 @@ int main() {
     // Example of the style (it is not one of your three):
     //   check(stageFile(root, "a.txt").parent_path() == root / ".minigit" / "stage",
     //         "staged files live in .minigit/stage");
-    (void)root;
+    check(stageFile(root, "notes.txt") == root / ".minigit" / "stage" / "notes.txt",
+          "stages a top-level file");
+    check(stageFile(root, "docs/notes.txt") ==
+              root / ".minigit" / "stage" / "docs" / "notes.txt",
+          "stages a file in a sub-folder");
+    check(stageFile(root, "docs/notes.txt").filename() == "notes.txt",
+          "keeps the staged file name");
 
     if (passes < 3) {
         std::cout << "  FAIL  write at least three passing checks (you have " << passes << ")\n";
